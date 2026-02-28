@@ -38,7 +38,7 @@ export default function ExportBagsSection() {
               <div className="sm:col-span-12">
                 <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50">
                   <img
-                    src="/public/images/Sacospercol.png"
+                    src="/images/Sacospercol.png"
                     alt="Export green coffee bag with printed markings"
                     className="h-full w-full object-cover"
                     loading="lazy"
