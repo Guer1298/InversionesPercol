@@ -4,7 +4,7 @@ export default function HeroSlider() {
       {/* Background image (FULL SCREEN) */}
       <div className="relative h-dvh w-full">
         <img
-          src="/src/assets/Hero.jpg"
+          src="/public/images/Hero.jpg"
           alt="PERCOL green coffee export operations"
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"

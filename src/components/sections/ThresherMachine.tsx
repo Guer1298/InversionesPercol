@@ -39,7 +39,7 @@ export default function ThresherDonBlasSection() {
               <div className="sm:col-span-12">
                 <div className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50">
                   <img
-                    src="/src/assets/Donblas.png"
+                    src="/public/images/Donblas.png"
                     alt="Don Blas thresher facility"
                     className="h-full w-full object-cover"
                     loading="lazy"
@@ -53,7 +53,7 @@ export default function ThresherDonBlasSection() {
               <div className="sm:col-span-6">
                 <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50">
                   <img
-                    src="/src/assets/image copy.png"
+                    src="/public/images/image copy.png"
                     alt="Coffee sacks and lot handling"
                     className="h-full w-full object-cover"
                     loading="lazy"
@@ -64,7 +64,7 @@ export default function ThresherDonBlasSection() {
               <div className="sm:col-span-6">
                 <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-50">
                   <img
-                    src="/src/assets/image.png"
+                    src="/public/images/image.png"
                     alt="Manual sorting line"
                     className="h-full w-full object-cover"
                     loading="lazy"
