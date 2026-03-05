@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import HeroSlider from "@/components/hero/HeroSlider";
-import KPIBar from "@/components/sections/KPIBar";
 import CTASection from "@/components/sections/CTASection";
 import ExportMap from "@/components/sections/ExportMap";
 import ThresherMachine from "@/components/sections/ThresherMachine";
 import ExportBagsSection from "@/components/sections/ExportBagsSection";
+import OurOriginsSection from "@/components/sections/OurOriginsSection";
 
 export default function HomePage() {
   useEffect(() => {
@@ -17,10 +17,9 @@ export default function HomePage() {
       <ExportMap />
       <ThresherMachine />
       <ExportBagsSection />
+      <OurOriginsSection />
 
-      <div className="mt-8">
-        <KPIBar />
-      </div>
+      
       <div className="mt-12">
         <CTASection />
       </div>
