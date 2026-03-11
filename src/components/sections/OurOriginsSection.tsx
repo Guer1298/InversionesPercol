@@ -1,4 +1,4 @@
-import  { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 type Milestone = {
   dateLabel: string;
@@ -49,72 +49,89 @@ export default function OurOriginsMinimal() {
   return (
     <section
       aria-labelledby="origins-min-title"
-      className="bg-white"
+      className="relative overflow-hidden bg-white"
       style={{
         paddingTop: "env(safe-area-inset-top)",
         paddingBottom: "env(safe-area-inset-bottom)",
       }}
     >
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-        {/* Ultra-min header */}
+      {/* soft Percol atmosphere */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(122,74,42,0.06),transparent_24%),radial-gradient(circle_at_82%_82%,rgba(78,111,58,0.05),transparent_22%),radial-gradient(circle_at_50%_100%,rgba(196,58,47,0.03),transparent_16%)]" />
+
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+        {/* Header */}
         <header className="max-w-2xl">
-          <p className="text-xs font-medium tracking-wide text-neutral-500">OUR ORIGINS</p>
+          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1 text-[11px] font-semibold tracking-[0.16em] text-neutral-600">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#4E6F3A]" />
+            OUR ORIGINS
+          </div>
+
           <h2
             id="origins-min-title"
-            className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl"
+            className="mt-5 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl"
           >
-            Built for repeatability.
+            Built for repeatability. <br className="hidden sm:block" />
+            Refined for export.
           </h2>
-          <p className="mt-3 text-sm leading-6 text-neutral-600 sm:text-base">
-            A few milestones that explain how we became export-ready—without the noise.
+
+          <p className="mt-4 max-w-xl text-sm leading-7 text-neutral-600 sm:text-base">
+            A few milestones that explain how Percol became a cleaner, more reliable
+            export operation—without adding noise to the story.
           </p>
         </header>
 
-        {/* Minimal split: image + story */}
-        <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-center">
-          {/* Image (no gradients, no chips) */}
+        {/* Split layout */}
+        <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-10">
+          {/* Image */}
           <div className="lg:col-span-7">
-            <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50">
+            <div className="overflow-hidden rounded-[1.75rem] border border-neutral-200 bg-neutral-50 shadow-[0_10px_30px_rgba(0,0,0,0.04)]">
               <img
                 src={active.image}
                 alt={active.alt}
-                className="h-[clamp(16rem,45vh,26rem)] w-full object-cover"
+                className="h-[clamp(18rem,48vh,30rem)] w-full object-cover"
                 loading="eager"
                 decoding="async"
               />
             </div>
           </div>
 
-          {/* Text (simple) */}
+          {/* Text */}
           <div className="lg:col-span-5">
-            <div className="flex items-center gap-3 text-xs text-neutral-500">
-              <time dateTime={active.isoDate} className="font-medium">
-                {active.dateLabel}
-              </time>
-              <span className="h-1 w-1 rounded-full bg-neutral-300" aria-hidden />
-              <span className="font-medium">Milestone</span>
+            <div className="flex items-center gap-3 text-xs font-medium tracking-wide text-neutral-500">
+              <time dateTime={active.isoDate}>{active.dateLabel}</time>
+              <span className="h-1 w-1 rounded-full bg-[#7A4A2A]/30" aria-hidden />
+              <span className="text-[#7A4A2A]">Milestone</span>
             </div>
 
-            <h3 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-900">
+            <h3 className="mt-4 text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl">
               {active.title}
             </h3>
 
-            <p className="mt-3 text-sm leading-7 text-neutral-600 sm:text-base">{active.text}</p>
+            <p className="mt-4 text-sm leading-7 text-neutral-600 sm:text-base">
+              {active.text}
+            </p>
 
-            {/* Minimal controls (not “timeline”, not dots) */}
-            <div className="mt-6 flex flex-wrap gap-2">
+            {/* quiet supporting line */}
+            <div className="mt-6 border-l border-[#4E6F3A]/25 pl-4 text-sm leading-6 text-neutral-500">
+              Quality became repeatable when process, paperwork, and buyer expectations started working together.
+            </div>
+
+            {/* Milestones */}
+            <div className="mt-7 flex flex-wrap gap-2.5">
               {milestones.map((m, i) => {
                 const isActive = i === index;
+
                 return (
                   <button
                     key={m.isoDate}
                     type="button"
                     onClick={() => setIndex(i)}
                     className={[
-                      "rounded-full px-3 py-1 text-sm transition",
+                      "rounded-full px-3.5 py-1.5 text-sm font-medium transition-all duration-200",
+                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A4A2A]/20",
                       isActive
-                        ? "bg-neutral-900 text-white"
-                        : "border border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50",
+                        ? "bg-[#7A4A2A] text-white shadow-sm"
+                        : "border border-neutral-200 bg-white text-neutral-700 hover:border-[#4E6F3A]/25 hover:bg-[#4E6F3A]/[0.04]",
                     ].join(" ")}
                     aria-current={isActive ? "true" : undefined}
                     aria-label={`Open ${m.dateLabel}: ${m.title}`}

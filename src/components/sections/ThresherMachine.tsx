@@ -1,12 +1,12 @@
-import  { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Milestone = {
-  dateLabel: string; // short
-  isoDate: string; // YYYY-MM
-  year: string; // scannable
-  tag: string; // small label
-  title: string; // H3
-  text: string; // narrative
+  dateLabel: string;
+  isoDate: string;
+  year: string;
+  tag: string;
+  title: string;
+  text: string;
   image: string;
   alt: string;
 };
@@ -19,8 +19,10 @@ function Dot({ active }: { active: boolean }) {
   return (
     <span
       className={[
-        "h-2.5 w-2.5 rounded-full border transition",
-        active ? "bg-neutral-900 border-neutral-900" : "bg-white border-neutral-300",
+        "h-2.5 w-2.5 rounded-full border transition-all duration-200",
+        active
+          ? "border-[#7A4A2A] bg-[#7A4A2A] shadow-[0_0_0_4px_rgba(122,74,42,0.10)]"
+          : "border-neutral-300 bg-white group-hover:border-[#4E6F3A]/40",
       ].join(" ")}
       aria-hidden
     />
@@ -59,7 +61,7 @@ export default function DonBlasTimelineUX() {
         tag: "Selection",
         title: "Manual selection turns quality into consistency.",
         text:
-          "Under inspection light, hands and eyes remove what machines miss. This is where “good coffee” becomes an export lot that performs the same—bag after bag, shipment after shipment.",
+          "Under inspection light, hands and eyes remove what machines miss. This is where good coffee becomes an export lot that performs the same—bag after bag, shipment after shipment.",
         image: "/images/gallery/blas3.jpg",
         alt: "Manual sorting line at Don Blas for defect control and uniform green coffee",
       },
@@ -105,7 +107,6 @@ export default function DonBlasTimelineUX() {
 
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  // ✅ Keyboard nav only when user is focused/inside the section (no global hijack)
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       const within = sectionRef.current?.contains(document.activeElement);
@@ -114,11 +115,11 @@ export default function DonBlasTimelineUX() {
       if (e.key === "ArrowLeft") setIndex((v) => clamp(v - 1, 0, milestones.length - 1));
       if (e.key === "ArrowRight") setIndex((v) => clamp(v + 1, 0, milestones.length - 1));
     };
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [milestones.length]);
 
-  // ✅ Better mobile rail: snap + auto-center
   const railRef = useRef<HTMLDivElement | null>(null);
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -130,57 +131,61 @@ export default function DonBlasTimelineUX() {
     const overflowing = rail.scrollWidth > rail.clientWidth + 8;
     if (!overflowing) return;
 
-    const target =
-      el.offsetLeft - rail.clientWidth / 2 + el.clientWidth / 2;
-
+    const target = el.offsetLeft - rail.clientWidth / 2 + el.clientWidth / 2;
     rail.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
   }, [index]);
 
   return (
     <section
-      ref={sectionRef as any}
-      className="relative bg-white"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-white"
       aria-labelledby="donblas-timeline-title"
       style={{
         paddingTop: "env(safe-area-inset-top)",
         paddingBottom: "env(safe-area-inset-bottom)",
       }}
     >
-      {/* softer, cleaner background */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_8%,rgba(16,185,129,0.05),transparent_55%),radial-gradient(circle_at_86%_82%,rgba(245,158,11,0.045),transparent_62%)]" />
-      </div>
+      {/* Percol atmosphere */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_8%,rgba(78,111,58,0.06),transparent_34%),radial-gradient(circle_at_82%_82%,rgba(122,74,42,0.06),transparent_32%),radial-gradient(circle_at_55%_100%,rgba(196,58,47,0.03),transparent_18%)]" />
 
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         {/* Header */}
         <header className="max-w-3xl">
           <div className="inline-flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-[11px] font-semibold tracking-wide text-neutral-700">
+            <span className="rounded-full border border-[#7A4A2A]/15 bg-[#7A4A2A]/[0.06] px-3 py-1 text-[11px] font-semibold tracking-[0.14em] text-[#7A4A2A]">
               DON BLAS
             </span>
-            <span className="text-[11px] font-semibold tracking-wide text-neutral-500">
+            <span className="text-[11px] font-semibold tracking-[0.14em] text-neutral-500">
               MILLING • SELECTION • TRACEABILITY
             </span>
           </div>
 
           <h2
             id="donblas-timeline-title"
-            className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl"
+            className="mt-4 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl"
           >
-            Don Blas: the milling checkpoint behind export-ready Colombian green coffee.
+            Don Blas is where export confidence begins.
           </h2>
 
-          <p className="mt-3 text-sm leading-6 text-neutral-600 sm:text-base">
-            A minimal visual timeline built for buyers: controlled milling, manual defect control, and documentation
-            designed to speed up approvals—from sample to shipment.
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-600 sm:text-base">
+            A visual timeline for buyers: controlled milling, manual defect control, and documentation
+            designed to keep approvals clear from sample to shipment.
           </p>
 
-          {/* Trust chips (more minimal + more “buyer language”) */}
           <div className="mt-5 flex flex-wrap gap-2">
-            {["Lot IDs", "Defect control", "Export workflow", "Buyer-ready docs"].map((x) => (
+            {["Lot IDs", "Defect control", "Export workflow", "Buyer-ready docs"].map((x, i) => (
               <span
                 key={x}
-                className="rounded-full border border-neutral-200 bg-white/70 px-3 py-1 text-[11px] font-semibold tracking-wide text-neutral-700 backdrop-blur"
+                className={[
+                  "rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide backdrop-blur",
+                  i === 0
+                    ? "border border-[#4E6F3A]/15 bg-[#4E6F3A]/[0.06] text-[#4E6F3A]"
+                    : i === 1
+                      ? "border border-[#7A4A2A]/15 bg-[#7A4A2A]/[0.06] text-[#7A4A2A]"
+                      : i === 2
+                        ? "border border-[#C43A2F]/10 bg-[#C43A2F]/[0.05] text-[#8E2F29]"
+                        : "border border-neutral-200 bg-white/70 text-neutral-700",
+                ].join(" ")}
               >
                 {x}
               </span>
@@ -191,7 +196,7 @@ export default function DonBlasTimelineUX() {
         {/* Main */}
         <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:items-stretch">
           {/* Image */}
-          <figure className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-950 shadow-sm">
+          <figure className="relative overflow-hidden rounded-[2rem] border border-neutral-200 bg-neutral-950 shadow-[0_12px_40px_rgba(0,0,0,0.06)]">
             <img
               src={active.image}
               alt={active.alt}
@@ -200,20 +205,18 @@ export default function DonBlasTimelineUX() {
               decoding="async"
             />
 
-            {/* stronger editorial overlay */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/18 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent" />
 
-            {/* top label */}
             <figcaption className="absolute left-4 top-4">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-3 py-1 text-[11px] font-semibold tracking-wide text-white/90 backdrop-blur">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#4E6F3A]" aria-hidden />
                 {active.tag}
                 <span className="opacity-60">•</span>
                 <time dateTime={active.isoDate}>{active.year}</time>
               </div>
             </figcaption>
 
-            {/* bottom editorial caption */}
             <div className="absolute bottom-4 left-4 right-4">
               <div className="max-w-xl">
                 <div className="text-xs font-semibold tracking-wide text-white/70">
@@ -227,13 +230,13 @@ export default function DonBlasTimelineUX() {
           </figure>
 
           {/* Text card */}
-          <div className="flex flex-col justify-between rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+          <div className="flex flex-col justify-between rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-[0_12px_40px_rgba(0,0,0,0.04)] sm:p-8">
             <div>
-              <div className="text-xs font-semibold tracking-wide text-neutral-500">
+              <div className="text-xs font-semibold tracking-[0.14em] text-neutral-500">
                 THE STORY
               </div>
 
-              <h3 className="mt-2 text-2xl font-semibold tracking-tight text-neutral-900">
+              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-950">
                 {active.title}
               </h3>
 
@@ -241,14 +244,23 @@ export default function DonBlasTimelineUX() {
                 {active.text}
               </p>
 
-              {/* Proof blocks: fewer, more meaningful */}
               <div className="mt-6 grid gap-2 sm:grid-cols-3">
                 {[
-                  { k: "Location", v: "Popayán" },
-                  { k: "Stage", v: "Milling + selection" },
-                  { k: "Buyer outcome", v: "Faster approval" },
+                  { k: "Location", v: "Popayán", tone: "green" },
+                  { k: "Stage", v: "Milling + selection", tone: "brown" },
+                  { k: "Buyer outcome", v: "Faster approval", tone: "red" },
                 ].map((x) => (
-                  <div key={x.k} className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3">
+                  <div
+                    key={x.k}
+                    className={[
+                      "rounded-2xl px-4 py-3",
+                      x.tone === "green"
+                        ? "border border-[#4E6F3A]/12 bg-[#4E6F3A]/[0.05]"
+                        : x.tone === "brown"
+                          ? "border border-[#7A4A2A]/12 bg-[#7A4A2A]/[0.05]"
+                          : "border border-[#C43A2F]/10 bg-[#C43A2F]/[0.04]",
+                    ].join(" ")}
+                  >
                     <div className="text-[11px] font-semibold tracking-wide text-neutral-500">
                       {x.k}
                     </div>
@@ -260,17 +272,16 @@ export default function DonBlasTimelineUX() {
               </div>
             </div>
 
-            {/* CTAs */}
             <div className="mt-7 grid gap-2 sm:flex sm:items-center">
               <a
                 href="#request-sample"
-                className="inline-flex items-center justify-center rounded-2xl bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-neutral-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/25"
+                className="inline-flex items-center justify-center rounded-full bg-[#7A4A2A] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#6A3F23] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A4A2A]/20"
               >
                 Request a sample
               </a>
               <a
                 href="#download-qa"
-                className="inline-flex items-center justify-center rounded-2xl border border-neutral-200 bg-white px-5 py-2.5 text-sm font-semibold text-neutral-900 shadow-sm hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/20"
+                className="inline-flex items-center justify-center rounded-full border border-neutral-200 bg-white px-5 py-2.5 text-sm font-semibold text-neutral-900 transition hover:border-[#4E6F3A]/20 hover:bg-[#4E6F3A]/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A4A2A]/20"
               >
                 Download QA checklist
               </a>
@@ -284,7 +295,7 @@ export default function DonBlasTimelineUX() {
         {/* Timeline */}
         <div className="mt-12">
           <div className="flex items-center justify-between">
-            <div className="text-xs font-semibold tracking-wide text-neutral-500">
+            <div className="text-xs font-semibold tracking-[0.14em] text-neutral-500">
               TIMELINE
             </div>
             <div className="text-xs text-neutral-500 sm:hidden">
@@ -293,10 +304,8 @@ export default function DonBlasTimelineUX() {
           </div>
 
           <div className="relative mt-4">
-            {/* desktop line */}
             <div className="pointer-events-none absolute left-0 right-0 top-[14px] hidden h-[2px] bg-neutral-200 sm:block" />
 
-            {/* rail */}
             <div
               ref={railRef}
               className="flex gap-6 overflow-x-auto pb-2 sm:overflow-visible sm:justify-between [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory"
@@ -304,36 +313,41 @@ export default function DonBlasTimelineUX() {
             >
               {milestones.map((m, idx) => {
                 const isActive = idx === index;
+
                 return (
                   <button
-                      key={`${m.isoDate}-${idx}`}
-                      ref={(el) => {
-                        itemRefs.current[idx] = el;
-                      }}
-                      onClick={() => setIndex(idx)}
-                      className={[
-                        "group shrink-0 snap-center",
-                        "flex flex-col items-center text-center",
-                        "rounded-2xl px-2 py-1",
-                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/20",
-                      ].join(" ")}
-                      aria-current={isActive ? "true" : undefined}
-                      aria-label={`Open ${m.dateLabel}: ${m.title}`}
-                    >
+                    key={`${m.isoDate}-${idx}`}
+                    ref={(el) => {
+                      itemRefs.current[idx] = el;
+                    }}
+                    onClick={() => setIndex(idx)}
+                    className={[
+                      "group shrink-0 snap-center",
+                      "flex flex-col items-center text-center",
+                      "rounded-2xl px-2 py-1 transition",
+                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A4A2A]/20",
+                    ].join(" ")}
+                    aria-current={isActive ? "true" : undefined}
+                    aria-label={`Open ${m.dateLabel}: ${m.title}`}
+                  >
                     <Dot active={isActive} />
                     <span
                       className={[
                         "mt-3 text-sm transition",
                         isActive
-                          ? "text-neutral-900 font-semibold"
-                          : "text-neutral-400 group-hover:text-neutral-600",
+                          ? "font-semibold text-neutral-900"
+                          : "text-neutral-400 group-hover:text-[#7A4A2A]",
                       ].join(" ")}
                     >
                       {m.dateLabel}
                     </span>
 
-                    {/* micro label only on desktop (keeps mobile clean) */}
-                    <span className="mt-1 hidden text-[11px] font-semibold tracking-wide text-neutral-500 sm:block">
+                    <span
+                      className={[
+                        "mt-1 hidden text-[11px] font-semibold tracking-wide sm:block",
+                        isActive ? "text-[#7A4A2A]" : "text-neutral-500",
+                      ].join(" ")}
+                    >
                       {m.tag}
                     </span>
                   </button>

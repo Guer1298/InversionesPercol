@@ -12,17 +12,30 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="py-10">
-      <HeroSlider />
-      <ExportMap />
-      <ThresherMachine />
-      <ExportBagsSection />
-      <OurOriginsSection />
+    <div className="bg-white">
+  <HeroSlider />
 
-      
-      <div className="mt-12">
-        <CTASection />
-      </div>
-    </div>
+  <main className="relative">
+    <section className="py-16 sm:py-20 lg:py-24">
+      <ExportMap />
+    </section>
+
+    <section className="bg-neutral-50/60 py-16 sm:py-20 lg:py-24">
+      <ThresherMachine />
+    </section>
+
+    <section className="py-16 sm:py-20 lg:py-24">
+      <ExportBagsSection />
+    </section>
+
+    <section className="bg-neutral-50/60 py-16 sm:py-20 lg:py-24">
+      <OurOriginsSection />
+    </section>
+
+    <section className="py-16 sm:py-20 lg:py-24">
+      <CTASection />
+    </section>
+  </main>
+</div>
   );
 }
