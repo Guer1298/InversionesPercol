@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import  { useEffect, useRef } from "react";
 import worldSvg from "@/assets/world.svg?raw";
 
 type ExportCountry = {
