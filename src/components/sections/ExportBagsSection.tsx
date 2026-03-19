@@ -1,177 +1,185 @@
-import { useMemo} from "react";
+import { Link } from "react-router-dom";
 
-type Card = {
-  title: string;
-  priceFrom: string;
-  rating: string;
+type Coffee = {
+  slug: string;
+  name: string;
+  region: string;
+  notes: string;
+  score: string;
   image: string;
-  image2?: string; // 👈 segunda imagen
   alt: string;
-  alt2?: string;
-  badge?: string;
+  tag: string;
 };
 
-function Star() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor" aria-hidden>
-      <path d="M10 15.27l-5.18 2.73 1-5.81L1.64 7.9l5.84-.85L10 1.75l2.52 5.3 5.84.85-4.18 4.29 1 5.81z" />
-    </svg>
-  );
-}
+const coffees: Coffee[] = [
+  {
+    slug: "cauca-alto-select",
+    name: "Cauca Alto Select",
+    region: "Cauca, Colombia",
+    notes: "Panela • Citrus • Chocolate",
+    score: "86.5",
+    image: "/images/saco3.png",
+    alt: "Green coffee beans from Cauca high altitude farms",
+    tag: "Export-ready lot",
+  },
+  {
+    slug: "volcanic-washed-reserve",
+    name: "Volcanic Washed Reserve",
+    region: "Popayán Plateau",
+    notes: "Red fruits • Caramel • Floral",
+    score: "87.2",
+    image: "/images/saco3.png",
+    alt: "Washed process coffee beans with bright acidity",
+    tag: "High-score profile",
+  },
+  {
+    slug: "mountain-shade-bourbon",
+    name: "Mountain Shade Bourbon",
+    region: "Andean Highlands",
+    notes: "Cocoa • Almond • Sweet spice",
+    score: "85.8",
+    image: "/images/saco3.png",
+    alt: "Bourbon variety coffee grown under shade",
+    tag: "Stable cup profile",
+  },
+];
 
-export default function ExportBagsShopRow() {
-  const items = useMemo<Card[]>(
-    () => [
-      {
-        title: "Export Bags",
-        priceFrom: "70 kg / bag",
-        rating: "5.0",
-        image: "/images/Sacospercol.png",
-        image2: "/images/saco2.png", // 👈 ejemplo
-        alt: "Export green coffee bags with printed markings and lot identification",
-        alt2: "Stacked export coffee bags prepared for shipment",
-      },
-      {
-        title: "Lot Marking",
-        priceFrom: "Lot • Origin • Variety",
-        rating: "4.9",
-        image: "/images/Sacospercol.png",
-        image2: "/images/saco2.png", // 👈 tu rueda (o la ruta real)
-        alt: "Close-up of coffee bag markings for lot identification",
-        alt2: "Flavor wheel showing tasting notes categories",
-        badge: "+ Quick add",
-      },
-      {
-        title: "Jute Fabric",
-        priceFrom: "Warehouse-safe",
-        rating: "4.9",
-        image: "/images/Sacospercol.png",
-        image2: "/images/saco2.png",
-        alt: "Durable jute fabric detail for export handling",
-        alt2: "Close-up of bag markings",
-      },
-      {
-        title: "Ready to Ship",
-        priceFrom: "Container workflow",
-        rating: "5.0",
-        image: "/images/Sacospercol.png",
-        image2: "/images/saco2.png",
-        alt: "Stacked export coffee bags prepared for shipment",
-        alt2: "Export green coffee bags with printed markings",
-      },
-    ],
-    []
-  );
-
+export default function FeaturedCoffees() {
   return (
-    <section className="bg-white">
-      <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <section className="bg-white py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
-            Export packaging
-          </h2>
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500">
+              Featured selection
+            </p>
 
-          <a
-            href="/packaging"
-            className="inline-flex items-center gap-2 text-sm font-medium text-neutral-700 hover:text-neutral-900"
-          >
-            View all
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-neutral-100 text-neutral-700">
-              ›
-            </span>
-          </a>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl lg:text-4xl">
+              Featured coffees
+            </h2>
+
+            <p className="mt-3 max-w-xl text-sm leading-6 text-neutral-600 sm:text-base sm:leading-7">
+              Export-ready specialty coffees with traceability, consistent cup
+              profiles, and verified quality for buyers who want clarity before
+              they commit.
+            </p>
+          </div>
+
+          <div className="hidden lg:block">
+            <Link
+              to="/catalog"
+              className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-800 transition hover:border-neutral-300 hover:bg-neutral-50 hover:text-neutral-900"
+            >
+              View full catalog
+              <span
+                aria-hidden="true"
+                className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-neutral-100 text-base"
+              >
+                →
+              </span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Mobile/tablet helper */}
+        <div className="mt-6 flex items-center justify-between lg:hidden">
+          <p className="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">
+            Swipe to explore
+          </p>
+          <p className="text-xs text-neutral-400">{coffees.length} coffees</p>
         </div>
 
         {/* Cards */}
-        <div className="mt-6">
-          <div
-            className="
-              flex gap-6 overflow-x-auto pb-3
-              [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
-              sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0
-              lg:grid-cols-4
-            "
-          >
-            {items.map((p) => (
-              <article
-                key={p.title}
-                className="group shrink-0 w-[78vw] max-w-[18rem] sm:w-auto sm:max-w-none"
-              >
-                {/* Image card */}
-                <div className="relative rounded-2xl bg-neutral-50 p-6">
-                  {/* Base image */}
-                  <img
-                    src={p.image}
-                    alt={p.alt}
-                    className={[
-                      "mx-auto h-44 w-auto object-contain sm:h-48",
-                      "transition duration-500 ease-out",
-                      // 👇 cuando hay segunda imagen, la primera se desvanece un poco
-                      p.image2 ? "group-hover:opacity-0 group-focus-within:opacity-0" : "",
-                      // tap feedback en móvil
-                      p.image2 ? "group-active:opacity-0" : "",
-                    ].join(" ")}
-                    loading="lazy"
-                    decoding="async"
-                  />
-
-                  {/* Hover image */}
-                  {p.image2 ? (
+        <div className="relative mt-8 sm:mt-10">
+          <div className="overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex snap-x snap-mandatory gap-4 pr-4 sm:gap-5 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible lg:pr-0">
+              {coffees.map((coffee) => (
+                <article
+                  key={coffee.slug}
+                  className="
+                    group flex min-h-[430px] w-[85%] min-w-[85%] snap-start flex-col
+                    overflow-hidden rounded-3xl border border-neutral-200 bg-white
+                    transition duration-300 hover:-translate-y-1 hover:shadow-xl
+                    sm:w-[380px] sm:min-w-[380px]
+                    lg:min-h-0 lg:w-auto lg:min-w-0
+                  "
+                >
+                  {/* Image */}
+                  <div className="relative overflow-hidden bg-neutral-100">
                     <img
-                      src={p.image2}
-                      alt={p.alt2 ?? ""}
-                      className={[
-                        "pointer-events-none absolute inset-0 mx-auto",
-                        "h-full w-full object-contain",
-                        "p-6", // mantiene el mismo padding visual
-                        "opacity-0",
-                        "transition duration-500 ease-out",
-                        // 👇 aparece al hover/focus/tap
-                        "group-hover:opacity-100 group-focus-within:opacity-100 group-active:opacity-100",
-                        // 👇 micro “zoom” premium
-                        "group-hover:scale-[1.02] group-focus-within:scale-[1.02] group-active:scale-[1.02]",
-                      ].join(" ")}
+                      src={coffee.image}
+                      alt={coffee.alt}
+                      className="h-56 w-full object-cover transition duration-500 group-hover:scale-[1.04] sm:h-64"
                       loading="lazy"
-                      decoding="async"
                     />
-                  ) : null}
 
-                  {/* Optional badge */}
-                  {p.badge ? (
-                    <div className="absolute inset-x-0 bottom-4 flex justify-center">
-                      <div className="rounded-full bg-black px-4 py-2 text-xs font-semibold text-white shadow-sm">
-                        {p.badge}
-                      </div>
+                    {/* Score */}
+                    <div className="absolute left-4 top-4 inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-neutral-900 shadow-sm backdrop-blur">
+                      {coffee.score} SCA
                     </div>
-                  ) : null}
-                </div>
 
-                {/* Text */}
-                <div className="pt-4 text-center">
-                  <h3 className="text-base font-semibold text-neutral-900">{p.title}</h3>
-
-                  <p className="mt-1 text-sm text-neutral-500">From {p.priceFrom}</p>
-
-                  <div className="mt-2 flex items-center justify-center gap-1 text-sm text-neutral-900">
-                    <span className="font-medium">{p.rating}</span>
-                    <span className="text-amber-500">
-                      <Star />
-                    </span>
+                    {/* Tag */}
+                    <div className="absolute bottom-4 left-4 inline-flex items-center rounded-full bg-neutral-900/85 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+                      {coffee.tag}
+                    </div>
                   </div>
 
-                  {/* Minimal hint (optional) */}
-                  {p.image2 ? (
-                    <p className="mt-2 text-[11px] text-neutral-400">
-                      Hover / tap to preview
-                    </p>
-                  ) : null}
-                </div>
-              </article>
-            ))}
+                  {/* Content */}
+                  <div className="flex flex-1 flex-col p-5 sm:p-6">
+                    <div>
+                      <h3 className="text-lg font-semibold tracking-tight text-neutral-900">
+                        {coffee.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-neutral-500">
+                        {coffee.region}
+                      </p>
+                    </div>
+
+                    <div className="mt-4">
+                      <p className="text-sm leading-6 text-neutral-700">
+                        {coffee.notes}
+                      </p>
+                    </div>
+
+                    <div className="mt-auto pt-5">
+                      <div className="flex items-center justify-between gap-4 border-t border-neutral-100 pt-4">
+                        <div className="min-w-0">
+                          <p className="text-xs uppercase tracking-wide text-neutral-400">
+                            Cup profile
+                          </p>
+                          <p className="mt-1 text-sm font-medium text-neutral-800">
+                            Clean and export-ready
+                          </p>
+                        </div>
+
+                        <Link
+                          to={`/catalog/${coffee.slug}`}
+                          className="inline-flex shrink-0 items-center rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2"
+                          aria-label={`View details for ${coffee.name}`}
+                        >
+                          View details
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
 
-          <p className="mt-2 text-xs text-neutral-500 sm:hidden">Tip: swipe to browse.</p>
+          {/* Right fade hint */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent lg:hidden" />
+        </div>
+
+        {/* Mobile / tablet CTA */}
+        <div className="mt-8 lg:hidden">
+          <Link
+            to="/catalog"
+            className="inline-flex w-full items-center justify-center rounded-full bg-neutral-900 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
+          >
+            View full catalog
+          </Link>
         </div>
       </div>
     </section>

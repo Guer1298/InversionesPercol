@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
-import PublicLayout from "@/layouts/PublicLayout";
-import PortalLayout from "@/layouts/PortalLayout";
+import PublicLayout from "../layouts/PublicLayout";
 
-import HomePage from "@/pages/Home";
-import SolutionsPage from "@/pages/Solutions";
-import InternationalPage from "@/pages/International";
-import AboutPage from "@/pages/About";
-import ContactPage from "@/pages/Contact";
-import InventoryPage from "@/pages/Inventory";
-import PortalPage from "@/pages/Portal";
+import HomePage from "../pages/Home";
+import CatalogPage from "../pages/Catalog";
+import OriginPage from "../pages/Origin";
+import TraceabilityPage from "../pages/Traceability";
+import SustainabilityPage from "../pages/Sustainability";
+import LogisticsPage from "../pages/Logistics/index";
+import AboutPage from "../pages/About";
+import ContactPage from "../pages/Contact";
+
 
 export const router = createBrowserRouter([
   {
@@ -16,16 +17,14 @@ export const router = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "solutions", element: <SolutionsPage /> },
-      { path: "international", element: <InternationalPage /> },
+      { path: "catalog", element: <CatalogPage /> },
+      { path: "origin", element: <OriginPage /> },
+      { path: "traceability", element: <TraceabilityPage /> },
+      { path: "sustainability", element: <SustainabilityPage /> },
+      { path: "logistics", element: <LogisticsPage /> },
       { path: "about", element: <AboutPage /> },
       { path: "contact", element: <ContactPage /> },
-      { path: "inventory", element: <InventoryPage /> },
     ],
   },
-  {
-    path: "/portal",
-    element: <PortalLayout />,
-    children: [{ index: true, element: <PortalPage /> }],
-  },
+  
 ]);

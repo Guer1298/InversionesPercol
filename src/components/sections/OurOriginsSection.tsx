@@ -1,147 +1,177 @@
-import { useMemo, useState } from "react";
+import type { JSX } from "react";
+import { Link } from "react-router-dom";
 
-type Milestone = {
-  dateLabel: string;
-  isoDate: string;
-  title: string;
-  text: string;
+type Region = {
+  id: string;
+  name: string;
+  altitude: string;
+  climate: string;
+  soil: string;
+  profile: string;
   image: string;
-  alt: string;
 };
 
-export default function OurOriginsMinimal() {
-  const milestones = useMemo<Milestone[]>(
-    () => [
-      {
-        dateLabel: "Dec 2018",
-        isoDate: "2018-12",
-        title: "We started with one rule: prove the lot.",
-        text:
-          "Our first exports showed what buyers really need—repeatable quality, clear documentation, and decisions that stay clean from sample to shipment.",
-        image: "/images/Our.jpg",
-        alt: "Coffee sacks prepared for export at our facility in Colombia",
-      },
-      {
-        dateLabel: "Mar 2019",
-        isoDate: "2019-03",
-        title: "Traceability became the standard.",
-        text:
-          "Lot IDs, handling notes, and buyer-ready paperwork turned great coffee into confident re-orders—shipment after shipment.",
-        image: "/images/Our.jpg",
-        alt: "Facility interior showing storage and equipment for traceable coffee lots",
-      },
-      {
-        dateLabel: "Jun 2019",
-        isoDate: "2019-06",
-        title: "Consistency is built by discipline.",
-        text:
-          "Selection and evaluation routines tightened. The goal stayed simple: the same performance, bag after bag.",
-        image: "/images/Our.jpg",
-        alt: "Manual coffee sorting line used for defect control and consistency",
-      },
-    ],
-    []
-  );
+const regions: Region[] = [
+  {
+    id: "cauca",
+    name: "Cauca",
+    altitude: "1,600 – 2,000 masl",
+    climate: "Stable mountain climate with consistent rainfall",
+    soil: "Volcanic, mineral-rich",
+    profile: "Balanced cup with bright acidity and caramel sweetness",
+    image: "/images/origins/Fcauca.png",
+  },
+  {
+    id: "huila",
+    name: "Huila",
+    altitude: "1,400 – 1,900 masl",
+    climate: "Warm days, cool nights",
+    soil: "Fertile volcanic soils",
+    profile: "Sweet, fruity, with pronounced acidity",
+    image: "/images/origins/Fhuila.png",
+  },
+  {
+    id: "narino",
+    name: "Nariño",
+    altitude: "1,800 – 2,200 masl",
+    climate: "High altitude with strong sun exposure",
+    soil: "Volcanic and well-drained",
+    profile: "Complex, floral, high acidity",
+    image: "/images/origins/Fnarino.png",
+  },
+  {
+    id: "caldas",
+    name: "Caldas",
+    altitude: "1,300 – 1,800 masl",
+    climate: "Humid and consistent",
+    soil: "Volcanic ash soils",
+    profile: "Balanced body, chocolate and nut notes",
+    image: "/images/origins/Fcaldas.png",
+  },
+  {
+    id: "antioquia",
+    name: "Antioquia",
+    altitude: "1,200 – 1,800 masl",
+    climate: "Tropical with steady rainfall",
+    soil: "Rich and fertile",
+    profile: "Smooth, mild acidity, cocoa sweetness",
+    image: "/images/origins/Fantioquia.png",
+  },
+];
 
-  const [index, setIndex] = useState(0);
-  const active = milestones[index];
-
+export default function OriginsSection(): JSX.Element {
   return (
-    <section
-      aria-labelledby="origins-min-title"
-      className="relative overflow-hidden bg-white"
-      style={{
-        paddingTop: "env(safe-area-inset-top)",
-        paddingBottom: "env(safe-area-inset-bottom)",
-      }}
-    >
-      {/* soft Percol atmosphere */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_12%,rgba(122,74,42,0.06),transparent_24%),radial-gradient(circle_at_82%_82%,rgba(78,111,58,0.05),transparent_22%),radial-gradient(circle_at_50%_100%,rgba(196,58,47,0.03),transparent_16%)]" />
-
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+    <section className="bg-white py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <header className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1 text-[11px] font-semibold tracking-[0.16em] text-neutral-600">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#4E6F3A]" />
-            OUR ORIGINS
-          </div>
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500">
+            Coffee origins
+          </p>
 
-          <h2
-            id="origins-min-title"
-            className="mt-5 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl"
-          >
-            Built for repeatability. <br className="hidden sm:block" />
-            Refined for export.
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl lg:text-4xl">
+            Origin defines the cup
           </h2>
 
-          <p className="mt-4 max-w-xl text-sm leading-7 text-neutral-600 sm:text-base">
-            A few milestones that explain how Percol became a cleaner, more reliable
-            export operation—without adding noise to the story.
+          <p className="mt-4 text-sm leading-6 text-neutral-600 sm:text-base sm:leading-7">
+            Each region expresses a distinct combination of altitude, climate,
+            and soil. These variables shape flavor, structure, and consistency.
           </p>
-        </header>
+        </div>
 
-        {/* Split layout */}
-        <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-10">
-          {/* Image */}
-          <div className="lg:col-span-7">
-            <div className="overflow-hidden rounded-[1.75rem] border border-neutral-200 bg-neutral-50 shadow-[0_10px_30px_rgba(0,0,0,0.04)]">
-              <img
-                src={active.image}
-                alt={active.alt}
-                className="h-[clamp(18rem,48vh,30rem)] w-full object-cover"
-                loading="eager"
-                decoding="async"
-              />
+        {/* Helper text */}
+        <div className="mt-6 flex items-center justify-between lg:hidden">
+          <p className="text-xs font-medium uppercase tracking-[0.14em] text-neutral-400">
+            Swipe to explore
+          </p>
+          <p className="text-xs text-neutral-400">{regions.length} origins</p>
+        </div>
+
+        {/* Cards */}
+        <div className="relative mt-8 sm:mt-10">
+          <div className="overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex snap-x snap-mandatory gap-4 pr-4 sm:gap-5 lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-6 lg:overflow-visible lg:pr-0">
+              {regions.map((region) => (
+                <article
+                  key={region.id}
+                  className="
+                    group flex min-h-[480px] w-[85%] min-w-[85%] snap-start flex-col
+                    overflow-hidden rounded-3xl border border-neutral-200 bg-white
+                    shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl
+                    sm:min-h-[520px] sm:w-[48%] sm:min-w-[48%]
+                    lg:min-h-0 lg:w-auto lg:min-w-0
+                  "
+                >
+                  {/* Image */}
+                  <div className="relative h-56 overflow-hidden bg-neutral-100 sm:h-64">
+                    <img
+                      src={region.image}
+                      alt={`${region.name} coffee region`}
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+                      loading="lazy"
+                    />
+
+                    <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-neutral-900 shadow-sm backdrop-blur">
+                      {region.name}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex flex-1 flex-col p-5 sm:p-6">
+                    <div>
+                      <h3 className="text-lg font-semibold tracking-tight text-neutral-900">
+                        {region.name}
+                      </h3>
+
+                      <p className="mt-3 text-sm leading-6 text-neutral-600">
+                        {region.profile}
+                      </p>
+                    </div>
+
+                    {/* Data */}
+                    <div className="mt-5 grid grid-cols-1 gap-4 border-t border-neutral-100 pt-4 text-sm">
+                      <div>
+                        <span className="text-neutral-400">Altitude</span>
+                        <p className="mt-1 font-medium text-neutral-900">
+                          {region.altitude}
+                        </p>
+                      </div>
+
+                      <div>
+                        <span className="text-neutral-400">Climate</span>
+                        <p className="mt-1 font-medium text-neutral-900">
+                          {region.climate}
+                        </p>
+                      </div>
+
+                      <div>
+                        <span className="text-neutral-400">Soil</span>
+                        <p className="mt-1 font-medium text-neutral-900">
+                          {region.soil}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* CTA */}
+                    <div className="mt-auto pt-6">
+                      <Link
+                        to="/catalog"
+                        className="inline-flex items-center text-sm font-medium text-neutral-900 transition hover:text-neutral-700"
+                      >
+                        View coffees from {region.name}
+                        <span className="ml-2" aria-hidden="true">
+                          →
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
 
-          {/* Text */}
-          <div className="lg:col-span-5">
-            <div className="flex items-center gap-3 text-xs font-medium tracking-wide text-neutral-500">
-              <time dateTime={active.isoDate}>{active.dateLabel}</time>
-              <span className="h-1 w-1 rounded-full bg-[#7A4A2A]/30" aria-hidden />
-              <span className="text-[#7A4A2A]">Milestone</span>
-            </div>
-
-            <h3 className="mt-4 text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl">
-              {active.title}
-            </h3>
-
-            <p className="mt-4 text-sm leading-7 text-neutral-600 sm:text-base">
-              {active.text}
-            </p>
-
-            {/* quiet supporting line */}
-            <div className="mt-6 border-l border-[#4E6F3A]/25 pl-4 text-sm leading-6 text-neutral-500">
-              Quality became repeatable when process, paperwork, and buyer expectations started working together.
-            </div>
-
-            {/* Milestones */}
-            <div className="mt-7 flex flex-wrap gap-2.5">
-              {milestones.map((m, i) => {
-                const isActive = i === index;
-
-                return (
-                  <button
-                    key={m.isoDate}
-                    type="button"
-                    onClick={() => setIndex(i)}
-                    className={[
-                      "rounded-full px-3.5 py-1.5 text-sm font-medium transition-all duration-200",
-                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7A4A2A]/20",
-                      isActive
-                        ? "bg-[#7A4A2A] text-white shadow-sm"
-                        : "border border-neutral-200 bg-white text-neutral-700 hover:border-[#4E6F3A]/25 hover:bg-[#4E6F3A]/[0.04]",
-                    ].join(" ")}
-                    aria-current={isActive ? "true" : undefined}
-                    aria-label={`Open ${m.dateLabel}: ${m.title}`}
-                  >
-                    {m.dateLabel}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          {/* Fade hint */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent lg:hidden" />
         </div>
       </div>
     </section>
